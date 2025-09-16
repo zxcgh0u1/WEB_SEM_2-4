@@ -14,8 +14,19 @@ const askRoutes = require("./routes/askRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🔒 middleware безопасности
-app.use(helmet());
+// 🔒 middleware безопасности с мягким CSP
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "script-src": ["'self'", "'unsafe-inline'"], // разрешаем inline JS
+        "script-src-attr": ["'unsafe-inline'"],      // разрешаем onclick/onload
+      },
+    },
+  })
+);
+
 app.disable("x-powered-by"); // убираем лишний заголовок
 app.use(express.json({ limit: "100kb" })); // ограничение на размер тела запроса
 app.use(express.urlencoded({ extended: true, limit: "100kb" }));
