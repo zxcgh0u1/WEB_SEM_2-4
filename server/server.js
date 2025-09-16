@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const helmet = require("helmet"); // 🔹 защита заголовками
 const { initBot } = require("../bot/bot");
 
 const volunteerRoutes = require("./routes/volunteerRoutes");
@@ -11,11 +12,13 @@ const requestsRoutes = require("./routes/requestsRoutes");
 const askRoutes = require("./routes/askRoutes");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// ✅ парсим JSON и формы до всех роутов
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// 🔒 middleware безопасности
+app.use(helmet());
+app.disable("x-powered-by"); // убираем лишний заголовок
+app.use(express.json({ limit: "100kb" })); // ограничение на размер тела запроса
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 
 // 🔹 раздаём статические файлы (index.html, css, js и т.п.)
 app.use(express.static(path.join(__dirname, "../client")));
@@ -34,8 +37,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/index.html"));
 });
 
-
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
   initBot(); // запускаем бота вместе с сервером
 });
