@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Volunteer Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Volunteer Management System</h1>
+    <p>Учет волонтеров, мероприятий и активности</p>
+  </header>
+
+  <main class="grid-container">
+    <!-- Волонтеры -->
+    <section class="card">
+      <h2>Добавить волонтера</h2>
+      <form id="volunteerForm">
+        <input type="text" name="name" placeholder="Имя" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="phone" placeholder="Телефон">
+        <button type="submit">Добавить</button>
+      </form>
+      <button onclick="fetchVolunteers()">Показать всех волонтеров</button>
+      <ul id="volunteersList"></ul>
+    </section>
+
+    <!-- Организаторы -->
+    <section class="card">
+      <h2>Добавить организатора</h2>
+      <form id="organizerForm">
+        <input type="text" name="name" placeholder="Имя" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="phone" placeholder="Телефон">
+        <button type="submit">Добавить</button>
+      </form>
+      <button onclick="fetchOrganizers()">Показать организаторов</button>
+      <ul id="organizersList"></ul>
+    </section>
+
+    <!-- Мероприятия -->
+    <section class="card">
+      <h2>Добавить мероприятие</h2>
+      <form id="eventForm">
+        <input type="text" name="title" placeholder="Название" required>
+        <textarea name="description" placeholder="Описание"></textarea>
+        <input type="date" name="date" required>
+        <input type="number" name="max_participants" placeholder="Макс. участников">
+        <input type="number" name="organizer_id" placeholder="ID организатора">
+        <button type="submit">Добавить</button>
+      </form>
+      <button onclick="fetchEvents()">Показать мероприятия</button>
+      <ul id="eventsList"></ul>
+    </section>
+
+    <!-- Участие -->
+    <section class="card">
+      <h2>Участие</h2>
+      <form id="participationForm">
+        <input type="number" name="volunteer_id" placeholder="ID волонтера" required>
+        <input type="number" name="event_id" placeholder="ID мероприятия" required>
+        <input type="text" name="status" placeholder="Статус (например, registered)">
+        <button type="submit">Добавить участие</button>
+      </form>
+      <button onclick="fetchParticipation()">Показать участие</button>
+      <ul id="participationList"></ul>
+    </section>
+
+    <!-- Отчёты -->
+    <section class="card">
+      <h2>Отчёты</h2>
+      <form id="reportForm">
+        <input type="number" name="volunteer_id" placeholder="ID волонтера" required>
+        <input type="number" name="event_id" placeholder="ID мероприятия" required>
+        <input type="number" name="hours" placeholder="Часы">
+        <input type="text" name="feedback" placeholder="Отзыв">
+        <button type="submit">Добавить отчёт</button>
+      </form>
+      <button onclick="fetchReports()">Показать отчёты</button>
+      <ul id="reportsList"></ul>
+    </section>
+
+    <!-- Заявки -->
+    <section class="card">
+      <h2>Заявки на участие</h2>
+      <button onclick="fetchRequests()">Показать заявки</button>
+      <div id="requestsList"></div>
+    </section>
+  </main>
+
+  <!-- 💬 Окно ассистента -->
+  <div id="chatWidget" class="chat-widget">
+    <div class="chat-header" onclick="toggleChat()">💬 Ассистент</div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-input">
+      <input type="text" id="chatMessage" placeholder="Напишите сообщение...">
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
