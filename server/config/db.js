@@ -1,11 +1,18 @@
 const { Pool } = require("pg");
 
+// Подключение к базе через переменную окружения DATABASE_URL
 const pool = new Pool({
-  user: "egor",       // замени на своего
-  host: "localhost",
-  database: "volunteers_db", // база из SQL-скрипта
-  password: "1234",    // замени на своего
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // Render требует SSL
+});
+
+// Проверка соединения при запуске
+pool.query("SELECT NOW()", (err, res) => {
+  if (err) {
+    console.error("❌ Ошибка подключения к БД:", err.message);
+  } else {
+    console.log("✅ Подключение к БД успешно:", res.rows[0].now);
+  }
 });
 
 module.exports = pool;
