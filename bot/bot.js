@@ -179,5 +179,10 @@ bot.on("text", async (ctx) => {
 });
 
 // ================== START BOT ==================
-bot.launch();
-console.log("🤖 Bot запущен!");
+
+function initBot() {
+  bot.launch();
+  console.log("🤖 Bot запущен!");
+}
+
+module.exports = { initBot };

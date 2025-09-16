@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const { initBot } = require("../bot/bot");
 
 const volunteerRoutes = require("./routes/volunteerRoutes");
 const eventRoutes = require("./routes/eventRoutes");
@@ -33,6 +34,8 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/index.html"));
 });
 
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
+  initBot(); // запускаем бота вместе с сервером
 });
