@@ -4,13 +4,14 @@ require("dotenv").config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
-// Используем переменную окружения API_URL, если есть.
-// Если нет — пробуем Render-домен, иначе localhost.
-const API_URL =
-  process.env.API_URL ||
-  "https://web-sem-2-4-gml7.onrender.com/api" ||
-  "http://localhost:3000/api";
+// Берём API_URL из env или ставим локальный
+let API_URL = process.env.API_URL || "http://localhost:3000";
 
+// гарантируем, что будет /api
+if (!API_URL.endsWith("/api")) {
+  API_URL = API_URL.replace(/\/$/, ""); // убираем / в конце, если есть
+  API_URL += "/api";
+}
 const bot = new Telegraf(BOT_TOKEN);
 
 // ================== START ==================
