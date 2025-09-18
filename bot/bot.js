@@ -3,7 +3,13 @@ const axios = require("axios");
 require("dotenv").config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const API_URL = process.env.API_URL || "http://localhost:3000/api";
+
+// Используем переменную окружения API_URL, если есть.
+// Если нет — пробуем Render-домен, иначе localhost.
+const API_URL =
+  process.env.API_URL ||
+  "https://web-sem-2-4-gml7.onrender.com/api" ||
+  "http://localhost:3000/api";
 
 const bot = new Telegraf(BOT_TOKEN);
 
